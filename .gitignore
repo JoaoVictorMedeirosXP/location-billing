@@ -1,0 +1,41 @@
+# Ambiente virtual
+venv/
+.env/
+.venv/
+env/
+ENV/
+*.env
+
+# Arquivos de credenciais do Google
+*.json
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+
+# Arquivos Python compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Cache e arquivos temporários
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+
+# Arquivos Jupyter
+.ipynb_checkpoints/
+
+# Arquivos de saída
+output/
+logs/
+reports/
+
+# Arquivos do sistema
+Thumbs.db
+ehthumbs.db
+Desktop.ini
