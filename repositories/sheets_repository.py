@@ -6,7 +6,7 @@ from config.settings import SERVICE_ACCOUNT_FILE, SPREADSHEET_URL, SHEET_NAME, N
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-class GoogleSheetsService:
+class GoogleSheetsRepository:
     def __init__(self):
         credentials = service_account.Credentials.from_service_account_file(
             SERVICE_ACCOUNT_FILE,

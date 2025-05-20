@@ -1,17 +1,10 @@
-from services.bigquery_service import BigQueryService
-from services.sheets_service import GoogleSheetsService
-
-QUERY = """
-    SELECT *
-    FROM `xperesidencial.big_data.bills_big_data` 
-    WHERE conta_contrato = '7051194750'
-"""
+from repositories.bigquery_repository import BigQueryRepository
+from repositories.sheets_repository import GoogleSheetsRepository
 
 def main():
-    bq = BigQueryService()
-    raw_df = bq.run_query(QUERY)
     
-    sheets = GoogleSheetsService()
+    
+    sheets = GoogleSheetsRepository()
     sheets.append_dataframe(raw_df)
   
     return
