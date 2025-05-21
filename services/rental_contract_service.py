@@ -12,9 +12,8 @@ class RentalContractService:
         self.big_query_repo = big_query_repo
         return
 
-    def process_active_contracts(self):
-        firestore_cliente = self.firestore_repo()
-        contracts_data = firestore_cliente.get_all_contracts()
+    def process_active_contracts(self, cnpj_list: list):
+        contracts_data = self.firestore_repo.get_contracts_by_cnpjs([cnpj.numbered() for cnpj in cnpj_list])
         latest_contracts = self.get_latest_contracts_by_cnpj(contracts_data)
         return [self.set_contract_with_bills(i) for i in latest_contracts]
 
@@ -53,11 +52,10 @@ class RentalContractService:
         )
 
     def get_bills(self, all_account_contracts, reference_month):
-        bq = self.big_query_repo()
         query = """
             SELECT *
             FROM `xperesidencial.big_data.bills_big_data` 
             WHERE mes_referencia = ${reference_month}
             AND conta_contrato IN UNNEST(${all_account_contracts})
         """
-        return bq.run_query(query)
+        return self.big_query_repo.run_query(query)
