@@ -4,12 +4,14 @@ import re
 class CNPJ:
     def __init__(self, cnpj):
         if isinstance(cnpj, int):
-            raw = str(cnpj).zfill(14)
+            raw = str(cnpj)
         elif isinstance(cnpj, str):
             raw = self._clean(cnpj)
         else:
-            print(cnpj, "Is not a CNPJ valid")
             raise TypeError("CNPJ must be a string or an integer.")
+
+        if len(raw) < 14:
+            raw = raw.zfill(14)
 
         self.raw = raw
 
@@ -51,9 +53,11 @@ class CNPJ:
         if isinstance(other, CNPJ):
             return self.raw == other.raw
         elif isinstance(other, str):
-            return self.raw == self._clean(other)
+            other_clean = self._clean(other).zfill(14)
+            return self.raw == other_clean
         elif isinstance(other, int):
-            return self.raw == str(other).zfill(14)
+            other_str = str(other).zfill(14)
+            return self.raw == other_str
         return NotImplemented
 
     def __hash__(self):
