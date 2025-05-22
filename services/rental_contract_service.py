@@ -2,23 +2,29 @@ from models.rental_contract import RentalContract
 from models.bill import Bill
 from utils.cnpj import CNPJ
 from utils.date import reference_month
+from repositories.bigquery_repository import BigQueryRepository
+from repositories.firestore_repository import FirestoreRepository
 
 from datetime import date
 
 
 class RentalContractService:
 
-    def __init__(self, firestore_repo, big_query_repo):
+    def __init__(
+        self, firestore_repo: FirestoreRepository, big_query_repo: BigQueryRepository
+    ):
         self.firestore_repo = firestore_repo
         self.big_query_repo = big_query_repo
         return
 
-    def process_active_contracts(self, cnpj_list: list):
-        contracts_data = self.firestore_repo.get_contracts_by_cnpjs([cnpj.numbered() for cnpj in cnpj_list])
+    def process_rental_contracts(self, cnpj_list: list[str]):
+        contracts_data = self.firestore_repo.get_contracts_by_cnpjs(
+            [cnpj.numbered() for cnpj in cnpj_list]
+        )
         latest_contracts = self.get_latest_contracts_by_cnpj(contracts_data)
         return [self.set_contract_with_bills(i) for i in latest_contracts]
 
-    def get_latest_contracts_by_cnpj(self, contracts):
+    def get_latest_contracts_by_cnpj(self, contracts: list[dict]):
         latest_by_cnpj = {}
         for contract in contracts:
             cnpj = CNPJ(contract["cnpj"])
@@ -32,13 +38,13 @@ class RentalContractService:
     def set_contract_with_bills(self, contract):
         units = [i["contractAccount"] for i in contract["units"]]
         rental_units = [i["contractAccount"] for i in contract["rentalUnits"]]
-        bills = self.get_bills(units + rental_units, '04/2025')
-        print("Getting bills:", contract["name"], units + rental_units, bills)
+        bills = self.get_bills(units + rental_units, "04/2025")
         return RentalContract(
             contractDate=contract["contractDate"],
             name=contract["name"],
             rent_value=contract["rentValue"],
             calculation_method=contract["calculationMethod"],
+            cnpj=CNPJ(contract["cnpj"]),
             units=[
                 Bill(**row.to_dict())
                 for _, row in bills[bills["conta_contrato"].isin(units)].iterrows()

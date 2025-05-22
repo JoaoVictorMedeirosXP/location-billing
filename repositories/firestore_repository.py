@@ -15,11 +15,8 @@ class FirestoreRepository:
         chunk_size = 10
 
         for i in range(0, len(cnpjs), chunk_size):
-            chunk = cnpjs[i:i + chunk_size]
-            query = (
-                self.client.collection("rentalContracts")
-                .where("cnpj", "in", chunk)
-            )
+            chunk = cnpjs[i : i + chunk_size]
+            query = self.client.collection("rentalContracts").where("cnpj", "in", chunk)
 
             docs = query.stream()
             for doc in docs:

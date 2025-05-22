@@ -41,7 +41,7 @@ class CNPJ:
         """Return the CNPJ in the format: 00.000.000/0000-00"""
         c = self.raw
         return f"{c[:2]}.{c[2:5]}.{c[5:8]}/{c[8:12]}-{c[12:]}"
-    
+
     def numbered(self):
         return self.raw
 

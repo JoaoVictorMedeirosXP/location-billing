@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 from datetime import date, datetime
 
+
 @dataclass
 class Bill:
     classificacao_tarifaria: Optional[str]
