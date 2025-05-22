@@ -24,7 +24,7 @@ class GoogleSheetsRepository:
 
     def append_dataframe(self, df: pd.DataFrame):
         row = self.get_next_rows()
-        set_with_dataframe(self.sheet, df, row=row, include_column_header=False)
+        set_with_dataframe(self.sheet, df, row=row, include_column_header=True)
         return
 
     def get_column(self, column: str):

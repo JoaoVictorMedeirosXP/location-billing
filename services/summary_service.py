@@ -1,7 +1,7 @@
 from models.rental_contract import RentalContract
 
 
-class Summary:
+class SummaryService:
 
     def __init__(self, rental_contract: RentalContract):
         self.rental_contract = rental_contract
