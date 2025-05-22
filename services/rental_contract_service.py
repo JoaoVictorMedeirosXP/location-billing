@@ -1,6 +1,7 @@
 from models.rental_contract import RentalContract
 from models.bill import Bill
 from utils.cnpj import CNPJ
+from utils.date import reference_month
 
 from datetime import date
 
@@ -20,7 +21,6 @@ class RentalContractService:
     def get_latest_contracts_by_cnpj(self, contracts):
         latest_by_cnpj = {}
         for contract in contracts:
-            print(contract)
             cnpj = CNPJ(contract["cnpj"])
             if (
                 cnpj not in latest_by_cnpj
@@ -32,13 +32,13 @@ class RentalContractService:
     def set_contract_with_bills(self, contract):
         units = [i["contractAccount"] for i in contract["units"]]
         rental_units = [i["contractAccount"] for i in contract["rentalUnits"]]
-        bills = self.get_bills(units + rental_units, date.today())
-
+        bills = self.get_bills(units + rental_units, '04/2025')
+        print("Getting bills:", contract["name"], units + rental_units, bills)
         return RentalContract(
             contractDate=contract["contractDate"],
             name=contract["name"],
-            rentValue=contract["rentalValue"],
-            calculationMethod=contract["calculationMethod"],
+            rent_value=contract["rentValue"],
+            calculation_method=contract["calculationMethod"],
             units=[
                 Bill(**row.to_dict())
                 for _, row in bills[bills["conta_contrato"].isin(units)].iterrows()
@@ -52,10 +52,11 @@ class RentalContractService:
         )
 
     def get_bills(self, all_account_contracts, reference_month):
-        query = """
+        query = f"""
             SELECT *
             FROM `xperesidencial.big_data.bills_big_data` 
-            WHERE mes_referencia = ${reference_month}
-            AND conta_contrato IN UNNEST(${all_account_contracts})
+            WHERE mes_referencia = '{reference_month}'
+            AND conta_contrato IN UNNEST({all_account_contracts})
         """
+        print(query)
         return self.big_query_repo.run_query(query)

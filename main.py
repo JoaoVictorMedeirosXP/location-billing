@@ -17,7 +17,11 @@ def main():
     )
 
     cnpjs_list = contract_monitoring_service.get_cnpjs("E")
-    print(rental_contract_service.process_active_contracts(cnpjs_list))
+    
+    contracts = rental_contract_service.process_active_contracts(cnpjs_list)
+    
+    print([i.rental_units for i in contracts])
+    print(len(contracts))
 
     return
 

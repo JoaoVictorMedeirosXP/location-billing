@@ -4,13 +4,14 @@ import re
 class CNPJ:
     def __init__(self, cnpj):
         if isinstance(cnpj, int):
-            cnpj = str(cnpj).zfill(14)
+            raw = str(cnpj).zfill(14)
         elif isinstance(cnpj, str):
-            cnpj = self._clean(cnpj)
+            raw = self._clean(cnpj)
         else:
+            print(cnpj, "Is not a CNPJ valid")
             raise TypeError("CNPJ must be a string or an integer.")
 
-        self.raw = cnpj
+        self.raw = raw
 
         if not self._is_valid():
             raise ValueError(f"Invalid CNPJ: {cnpj}")
