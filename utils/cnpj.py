@@ -37,11 +37,13 @@ class CNPJ:
         )
         return cnpj[-2:] == dv1 + dv2
 
+    @property
     def formatted(self) -> str:
         """Return the CNPJ in the format: 00.000.000/0000-00"""
         c = self.raw
         return f"{c[:2]}.{c[2:5]}.{c[5:8]}/{c[8:12]}-{c[12:]}"
 
+    @property
     def numbered(self):
         return self.raw
 
