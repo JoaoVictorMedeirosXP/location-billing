@@ -17,4 +17,5 @@ class SummaryService:
             "porcentagem compensada": self.rental_contract.percent_compensated,
             "valor aluguel": self.rental_contract.rent,
             "porcentagem injetada": self.rental_contract.percent_injected,
+            "month_reference": self.rental_contract.month_reference,
         }

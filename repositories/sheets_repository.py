@@ -22,9 +22,13 @@ class GoogleSheetsRepository:
     def get_next_rows(self) -> int:
         return len(self.sheet.get_all_values()) + NUM_ROWS_TO_JUMP
 
-    def append_dataframe(self, df: pd.DataFrame):
+    def append_dataframe(self, df: pd.DataFrame, month_reference: str):
         row = self.get_next_rows()
-        set_with_dataframe(self.sheet, df, row=row, include_column_header=True)
+
+        self.sheet.update(f"A{row}", [[f"Mês de referência: {month_reference}"]])
+
+        set_with_dataframe(self.sheet, df, row=row + 1, include_column_header=True)
+
         return
 
     def get_column(self, column: str):

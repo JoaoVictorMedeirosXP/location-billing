@@ -20,7 +20,7 @@ def main():
 
     cnpjs_list = contract_monitoring_service.get_cnpjs("E")
 
-    rental_contracts = rental_contract_service.process_rental_contracts(cnpjs_list)
+    rental_contracts = rental_contract_service.process_rental_contracts(cnpjs_list, target_date="2025-04-01")
 
     summaries = [
         SummaryService(rental_contract).process_summary()

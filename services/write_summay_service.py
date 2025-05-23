@@ -14,6 +14,10 @@ class SheetsWriterService:
 
         df = pd.DataFrame(data)
 
-        self.sheets_repo.append_dataframe(df)
+        month_reference = data[0]["month_reference"]
+
+        df = df.drop(columns=["month_reference"])
+
+        self.sheets_repo.append_dataframe(df, month_reference)
 
         return

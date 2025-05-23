@@ -4,6 +4,7 @@ from models.bill import Bill
 from datetime import date
 from typing import List
 
+
 class RentalContract:
 
     def __init__(
@@ -17,6 +18,7 @@ class RentalContract:
         rental_units_bills: List[Bill],
         units_bills: List[Bill],
         cnpj: CNPJ,
+        month_reference: str,
     ):
         self.calculation_method = calculation_method
         self.contractDate = contractDate
@@ -27,6 +29,7 @@ class RentalContract:
         self.rental_units_bills = rental_units_bills
         self.units_bills = units_bills
         self.cnpj = cnpj
+        self.month_reference = month_reference
 
     @property
     def predicted_generation(self) -> float:
