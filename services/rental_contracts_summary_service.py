@@ -1,3 +1,4 @@
+from models.rental_summary_contract import RentalSummaryContract
 from models.rental_contract import RentalContract
 from models.bill import Bill
 from utils.cnpj import CNPJ
@@ -9,7 +10,7 @@ from datetime import datetime
 from typing import List, Dict
 
 
-class RentalContractService:
+class RentalSummaryContractsService:
 
     def __init__(
         self, firestore_repo: FirestoreRepository, big_query_repo: BigQueryRepository
@@ -18,25 +19,25 @@ class RentalContractService:
         self.big_query_repo = big_query_repo
         return
 
-    def process_rental_contracts(
+    def execute(
         self, cnpj_list: List[str], target_date: str
-    ) -> List[RentalContract]:
+    ) -> List[RentalSummaryContract]:
         contracts_data = self.firestore_repo.get_contracts_by_cnpjs(
             [cnpj.numbered for cnpj in cnpj_list]
         )
 
-        latest_contracts = self.get_latest_contracts_by_cnpj(
+        latest_contracts = self.get_contracts_by_cnpj_and_date(
             contracts_data, target_date
         )
 
         return [
-            self.set_contract_with_bills(i, target_date=target_date)
+            self.make_rental_summary_contract(i, target_date=target_date)
             for i in latest_contracts
         ]
 
-    def get_latest_contracts_by_cnpj(
+    def get_contracts_by_cnpj_and_date(
         self, contracts: List[Dict], target_date: str
-    ) -> List[int]:
+    ) -> List[RentalContract]:
         target_date_dt = datetime.strptime(target_date, "%Y-%m-%d").date()
         latest_by_cnpj = {}
 
@@ -51,7 +52,24 @@ class RentalContractService:
                 ):
                     latest_by_cnpj[cnpj] = contract
 
-        return list(latest_by_cnpj.values())
+        return list(
+            [
+                self.make_rental_contract(contract)
+                for contract in latest_by_cnpj.values()
+            ]
+        )
+
+    def make_rental_contract(self, contract: Dict) -> RentalContract:
+
+        return RentalContract(
+            calculation_method=contract["calculationMethod"],
+            name=contract["name"],
+            contractDate=contract["contractDate"],
+            rent_value=self.set_rent_value(contract["rentValue"]),
+            cnpj=CNPJ(contract["cnpj"]),
+            units=contract["units"],
+            rental_units=contract["rentalUnits"],
+        )
 
     def set_rent_value(self, rent_value):
         try:
@@ -59,28 +77,27 @@ class RentalContractService:
         except:
             return 0
 
-    def set_contract_with_bills(self, contract, target_date) -> RentalContract:
-        units = [i["contractAccount"] for i in contract["units"]]
-        rental_units = [i["contractAccount"] for i in contract["rentalUnits"]]
+    def make_rental_summary_contract(
+        self, rental_contract: RentalContract, target_date
+    ) -> RentalSummaryContract:
+
         bills = self.get_bills(
-            units + rental_units, reference_month=reference_month(target_date)
+            rental_contract.all_contract_codes,
+            reference_month=reference_month(target_date),
         )
-        return RentalContract(
-            contractDate=contract["contractDate"],
-            name=contract["name"],
-            rent_value=self.set_rent_value(contract["rentValue"]),
-            calculation_method=contract["calculationMethod"],
-            cnpj=CNPJ(contract["cnpj"]),
-            units=contract["units"],
-            rental_units=contract["rentalUnits"],
+        
+        return RentalSummaryContract(
+            rental_contract=rental_contract,
             units_bills=[
                 Bill(**row.to_dict())
-                for _, row in bills[bills["conta_contrato"].isin(units)].iterrows()
+                for _, row in bills[
+                    bills["conta_contrato"].isin([i['contractAccount'] for i in rental_contract.units])
+                ].iterrows()
             ],
             rental_units_bills=[
                 Bill(**row.to_dict())
                 for _, row in bills[
-                    bills["conta_contrato"].isin(rental_units)
+                    bills["conta_contrato"].isin([i['contractAccount'] for i in rental_contract.rental_units])
                 ].iterrows()
             ],
             month_reference=reference_month(target_date),

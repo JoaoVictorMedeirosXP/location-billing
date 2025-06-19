@@ -1,18 +1,18 @@
-from services.rental_contract_service import RentalContractService
+from services.rental_contracts_summary_service import RentalSummaryContractsService
 from services.contract_monitoring_service import ContractMonitoringService
-from services.write_summay_service import SheetsWriterService
+from services.write_summary_service import SheetsWriterService
 from services.summary_service import SummaryService
 
 
 class ProcessContractsFromSheetUseCase:
     def __init__(
         self,
-        rental_service: RentalContractService,
+        rental_summary_service: RentalSummaryContractsService,
         monitoring_service: ContractMonitoringService,
         writer_service: SheetsWriterService,
         summary_service: SummaryService,
     ):
-        self.rental_service = rental_service
+        self.rental_summary_service = rental_summary_service
         self.monitoring_service = monitoring_service
         self.writer_service = writer_service
         self.summary_service = summary_service
@@ -21,7 +21,7 @@ class ProcessContractsFromSheetUseCase:
         print("Use case, process contracts from sheets")
         cnpjs = self.monitoring_service.get_cnpjs("E")
 
-        rental_contracts = self.rental_service.process_rental_contracts(
+        rental_contracts = self.rental_summary_service.execute(
             cnpj_list=cnpjs, target_date=target_date
         )
 
