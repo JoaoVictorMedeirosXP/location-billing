@@ -13,7 +13,7 @@ from use_cases.process_contract_from_sheet_use_case import (
 )
 
 
-def make_process_contracts_use_case() -> ProcessContractsFromSheetUseCase:
+def make_legacy_process_contracts_use_case() -> ProcessContractsFromSheetUseCase:
     rental_service = RentalContractService(
         big_query_repo=BigQueryRepository(), firestore_repo=FirestoreRepository()
     )
@@ -32,3 +32,8 @@ def make_process_contracts_use_case() -> ProcessContractsFromSheetUseCase:
         writer_service=writer_service,
         summary_service=SummaryService,
     )
+
+
+def make_process_contracts_use_case() -> ProcessContractsFromSheetUseCase:
+
+    return

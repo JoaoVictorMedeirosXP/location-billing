@@ -18,7 +18,9 @@ class RentalContractService:
         self.big_query_repo = big_query_repo
         return
 
-    def process_rental_contracts(self, cnpj_list: List[str], target_date: str):
+    def process_rental_contracts(
+        self, cnpj_list: List[str], target_date: str
+    ) -> List[RentalContract]:
         contracts_data = self.firestore_repo.get_contracts_by_cnpjs(
             [cnpj.numbered for cnpj in cnpj_list]
         )
@@ -32,7 +34,9 @@ class RentalContractService:
             for i in latest_contracts
         ]
 
-    def get_latest_contracts_by_cnpj(self, contracts: List[Dict], target_date: str):
+    def get_latest_contracts_by_cnpj(
+        self, contracts: List[Dict], target_date: str
+    ) -> List[int]:
         target_date_dt = datetime.strptime(target_date, "%Y-%m-%d").date()
         latest_by_cnpj = {}
 
@@ -55,7 +59,7 @@ class RentalContractService:
         except:
             return 0
 
-    def set_contract_with_bills(self, contract, target_date):
+    def set_contract_with_bills(self, contract, target_date) -> RentalContract:
         units = [i["contractAccount"] for i in contract["units"]]
         rental_units = [i["contractAccount"] for i in contract["rentalUnits"]]
         bills = self.get_bills(
@@ -79,7 +83,7 @@ class RentalContractService:
                     bills["conta_contrato"].isin(rental_units)
                 ].iterrows()
             ],
-            month_reference=reference_month(target_date)
+            month_reference=reference_month(target_date),
         )
 
     def get_bills(self, all_account_contracts, reference_month):
