@@ -39,3 +39,6 @@ reports/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Pytest cache
+.pytest_cache
