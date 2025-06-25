@@ -9,9 +9,6 @@ def process_contract_from_sheets_handler():
     target_date = body.get("target_date", "2025-05-01")
 
     use_case = make_legacy_process_contracts_use_case()
-    count = use_case.execute(target_date=target_date)
+    res = use_case.execute(target_date=target_date)
 
-    return jsonify({"status": "success", "written_rows": count}), 200
-
-
-    return jsonify({"status": "error", "message": str(e)}), 500
+    return jsonify(res), 200
