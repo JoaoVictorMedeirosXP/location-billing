@@ -25,7 +25,7 @@ class RentalContract:
         self.cnpj = cnpj
 
     @property
-    def all_contract_codes(self):
+    def all_contract_codes(self) -> List[str]:
         unit_codes = [i["contractAccount"] for i in self.units]
         rental_units_codes = [i["contractAccount"] for i in self.rental_units]
 
