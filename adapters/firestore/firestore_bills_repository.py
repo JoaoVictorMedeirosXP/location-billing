@@ -1,0 +1,3 @@
+class FirestoreBillsRepository:
+
+    pass

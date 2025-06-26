@@ -1,6 +1,6 @@
 from models.rental_summary_contract import RentalSummaryContract
 from models.rental_contract import RentalContract
-from utils.date import reference_month
+from utils.reference_month import ReferenceMonth
 from repositories.bills_repository import BillRepository
 from repositories.contracts_repository import ContractRepository
 
@@ -31,11 +31,13 @@ class RentalSummaryContractsService:
         self, rental_contract: RentalContract, target_date
     ) -> RentalSummaryContract:
 
+        reference_month = ReferenceMonth(target_date)
+
         bills = self.bills_repo.get_bills(
             rental_contract.all_contract_codes,
-            reference_month=reference_month(target_date),
+            reference_month=reference_month.as_string,
         )
-        
+
         unit_accounts = [unit["contractAccount"] for unit in rental_contract.units]
         rental_unit_accounts = [
             unit["contractAccount"] for unit in rental_contract.rental_units
@@ -44,14 +46,10 @@ class RentalSummaryContractsService:
         return RentalSummaryContract(
             rental_contract=rental_contract,
             units_bills=[
-                bill
-                for bill in bills
-                if bill.conta_contrato in unit_accounts
+                bill for bill in bills if bill.conta_contrato in unit_accounts
             ],
             rental_units_bills=[
-                bill
-                for bill in bills
-                if bill.conta_contrato in rental_unit_accounts
+                bill for bill in bills if bill.conta_contrato in rental_unit_accounts
             ],
-            month_reference=reference_month(target_date),
+            month_reference=reference_month.as_string,
         )

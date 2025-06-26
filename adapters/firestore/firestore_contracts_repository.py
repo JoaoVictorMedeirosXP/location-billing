@@ -1,8 +1,6 @@
 from datetime import datetime
 
-from google.cloud import firestore
-from google.oauth2 import service_account
-from config.settings import SERVICE_ACCOUNT_FILE
+from adapters.firestore.connection import FirestoreClientSingleton
 
 from models.rental_contract import RentalContract
 from repositories.contracts_repository import ContractRepository
@@ -13,12 +11,9 @@ from typing import List, Dict
 
 class FirestoreContractsRepository(ContractRepository):
     def __init__(self):
-        credentials = service_account.Credentials.from_service_account_file(
-            SERVICE_ACCOUNT_FILE
-        )
-        self.client = firestore.Client(credentials=credentials)
+        self.client = FirestoreClientSingleton.get_client()
 
-    def get_contracts_by_cnpjs(self, cnpjs: list):
+    def get_contracts_by_cnpjs(self, cnpjs: List):
         contracts_data = []
         chunk_size = 10
 
@@ -32,7 +27,9 @@ class FirestoreContractsRepository(ContractRepository):
 
         return contracts_data
 
-    def get_contracts_by_cnpj_and_date(self, cnpj_list, target_date):
+    def get_contracts_by_cnpj_and_date(
+        self, cnpj_list: List, target_date
+    ) -> List[RentalContract]:
 
         target_date_dt = datetime.strptime(target_date, "%Y-%m-%d").date()
         latest_by_cnpj = {}
@@ -76,3 +73,6 @@ class FirestoreContractsRepository(ContractRepository):
             return float(rent_value)
         except:
             return 0
+        
+    def get_all_contracts_cnpjs(self):
+        return super().get_all_contracts_cnpjs()

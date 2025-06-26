@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from models.rental_contract import RentalContract
-from typing import List, Dict
+from typing import List
 
 
 class ContractRepository(ABC):
@@ -10,4 +10,8 @@ class ContractRepository(ABC):
         self, cnpj_list: List[str], target_date: str
     ) -> List[RentalContract]:
 
+        pass
+
+    @abstractmethod
+    def get_all_contracts_cnpjs(self):
         pass

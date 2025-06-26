@@ -1,13 +1,14 @@
 import pandas as pd
-from repositories.sheets_repository import GoogleSheetsRepository
+from typing import List, Dict
+from repositories.contracts_summary_repository import ContractSummaryRepository
 
 
 class SheetsWriterService:
 
-    def __init__(self, sheets_repo: GoogleSheetsRepository):
-        self.sheets_repo = sheets_repo
+    def __init__(self, contract_summary_repo: ContractSummaryRepository):
+        self.contract_summary_repo = contract_summary_repo
 
-    def append_table_with_header(self, data: list[dict]):
+    def append_table_with_header(self, data: List[Dict]):
         if not data:
             print("Empty list")
             return
@@ -18,6 +19,6 @@ class SheetsWriterService:
 
         df = df.drop(columns=["month_reference"])
 
-        self.sheets_repo.append_dataframe(df, month_reference)
+        self.contract_summary_repo.write_contracts_summary(df, month_reference)
 
         return
