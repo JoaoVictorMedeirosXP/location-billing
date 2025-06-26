@@ -1,4 +1,4 @@
-from utils.cnpj import CNPJ
+from utils.social_document import SocialNumber
 from repositories.contracts_repository import ContractRepository
 
 
@@ -11,7 +11,7 @@ class ContractMonitoringService:
         valid_cnpjs = []
         for cnpj in self.contracts_repo.get_all_contracts_cnpjs():
             try:
-                valid_cnpjs.append(CNPJ(cnpj))
+                valid_cnpjs.append(SocialNumber(cnpj))
             except:
                 print("INVALID CNPJS:", cnpj)
                 pass

@@ -4,7 +4,7 @@ from adapters.firestore.connection import FirestoreClientSingleton
 
 from models.rental_contract import RentalContract
 from repositories.contracts_repository import ContractRepository
-from utils.cnpj import CNPJ
+from utils.social_document import SocialNumber
 
 from typing import List, Dict
 
@@ -39,7 +39,7 @@ class FirestoreContractsRepository(ContractRepository):
         )
 
         for contract in contracts_data:
-            cnpj = CNPJ(contract["cnpj"])
+            cnpj = SocialNumber(contract["cnpj"])
             contract_date = contract["contractDate"].date()
 
             if contract_date <= target_date_dt:
@@ -63,7 +63,7 @@ class FirestoreContractsRepository(ContractRepository):
             name=contract["name"],
             contractDate=contract["contractDate"],
             rent_value=self.set_rent_value(contract["rentValue"]),
-            cnpj=CNPJ(contract["cnpj"]),
+            cnpj=SocialNumber(contract["cnpj"]),
             units=contract["units"],
             rental_units=contract["rentalUnits"],
         )
@@ -73,6 +73,6 @@ class FirestoreContractsRepository(ContractRepository):
             return float(rent_value)
         except:
             return 0
-        
+
     def get_all_contracts_cnpjs(self):
         return super().get_all_contracts_cnpjs()

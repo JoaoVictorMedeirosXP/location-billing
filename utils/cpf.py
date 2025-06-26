@@ -1,14 +1,14 @@
 from utils.document import Document
 
 
-class CNPJ(Document):
+class CPF(Document):
     @property
     def length(self) -> int:
-        return 14
+        return 11
 
     def _is_valid(self) -> bool:
-        cnpj = self.raw
-        if len(cnpj) != 14 or cnpj == cnpj[0] * 14:
+        cpf = self.raw
+        if len(cpf) != 11 or cpf == cpf[0] * 11:
             return False
 
         def calculate_check_digit(partial, weights):
@@ -16,13 +16,11 @@ class CNPJ(Document):
             remainder = total % 11
             return "0" if remainder < 2 else str(11 - remainder)
 
-        dv1 = calculate_check_digit(cnpj[:12], [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2])
-        dv2 = calculate_check_digit(
-            cnpj[:12] + dv1, [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
-        )
-        return cnpj[-2:] == dv1 + dv2
+        dv1 = calculate_check_digit(cpf[:9], range(10, 1, -1))
+        dv2 = calculate_check_digit(cpf[:9] + dv1, range(11, 1, -1))
+        return cpf[-2:] == dv1 + dv2
 
     @property
     def formatted(self) -> str:
         c = self.raw
-        return f"{c[:2]}.{c[2:5]}.{c[5:8]}/{c[8:12]}-{c[12:]}"
+        return f"{c[:3]}.{c[3:6]}.{c[6:9]}-{c[9:]}"
