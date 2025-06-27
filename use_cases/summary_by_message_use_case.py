@@ -1,8 +1,7 @@
-from services.rental_contracts_summary_service import RentalSummaryContractsService
 from services.contract_monitoring_service import ContractMonitoringService
-from services.write_summary_service import SheetsWriterService
+from services.rental_contracts_summary_service import RentalSummaryContractsService
 from services.summary_service import SummaryService
-
+from services.write_summary_service import SheetsWriterService
 from utils.reference_month import ReferenceMonth
 
 
@@ -22,7 +21,6 @@ class SummaryByMessageUseCase:
         self.summary_service = summary_service
         self.monitoring_service = monitoring_service
         self.writer_service = writer_service
-        return
 
     def execute(self, account_contract):
 

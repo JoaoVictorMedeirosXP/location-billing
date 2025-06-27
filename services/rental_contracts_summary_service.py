@@ -1,10 +1,9 @@
-from models.rental_summary_contract import RentalSummaryContract
+
 from models.rental_contract import RentalContract
-from utils.reference_month import ReferenceMonth
+from models.rental_summary_contract import RentalSummaryContract
 from repositories.bills_repository import BillRepository
 from repositories.contracts_repository import ContractRepository
-
-from typing import List
+from utils.reference_month import ReferenceMonth
 
 
 class RentalSummaryContractsService:
@@ -12,11 +11,10 @@ class RentalSummaryContractsService:
     def __init__(self, contracts_repo: ContractRepository, bills_repo: BillRepository):
         self.contracts_repo = contracts_repo
         self.bills_repo = bills_repo
-        return
 
     def execute(
-        self, cnpj_list: List[str], target_date: str
-    ) -> List[RentalSummaryContract]:
+        self, cnpj_list: list[str], target_date: str
+    ) -> list[RentalSummaryContract]:
 
         contracts_by_date_and_cnpj = self.contracts_repo.get_contracts_by_cnpj_and_date(
             cnpj_list=cnpj_list, target_date=target_date

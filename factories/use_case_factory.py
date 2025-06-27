@@ -1,22 +1,18 @@
-from services.rental_contracts_summary_service import RentalSummaryContractsService
-from services.contract_monitoring_service import ContractMonitoringService
-from services.summary_service import SummaryService
-from services.write_summary_service import SheetsWriterService
-
 from adapters.bigquery.bigquery_bills_repository import BigQueryBillsRepository
+from adapters.firestore.firestore_bills_repository import FirestoreBillsRepository
 from adapters.firestore.firestore_contracts_repository import (
     FirestoreContractsRepository,
 )
-from adapters.firestore.firestore_bills_repository import FirestoreBillsRepository
-from adapters.sheets.sheets_contracts_repository import SheetsContractsRepository
 from adapters.sheets.sheets_contract_summary_repository import (
     SheetsContractSummaryRepository,
 )
 from adapters.sheets.sheets_contracts_repository import SheetsContractsRepository
 from adapters.sheets.sheets_units_repository import SheetsUnitsRepository
-
-
 from config.settings import SHEET_BILLS_NAME, SHEET_CONTRACTS_NAME
+from services.contract_monitoring_service import ContractMonitoringService
+from services.rental_contracts_summary_service import RentalSummaryContractsService
+from services.summary_service import SummaryService
+from services.write_summary_service import SheetsWriterService
 from use_cases.process_contract_from_sheet_use_case import (
     ProcessContractsFromSheetUseCase,
 )

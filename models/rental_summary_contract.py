@@ -1,8 +1,7 @@
+
 from models.bill import Bill
 from models.rental_contract import RentalContract
 from utils.reference_month import ReferenceMonth
-
-from typing import List
 
 
 class RentalSummaryContract:
@@ -10,8 +9,8 @@ class RentalSummaryContract:
     def __init__(
         self,
         rental_contract: RentalContract,
-        rental_units_bills: List[Bill],
-        units_bills: List[Bill],
+        rental_units_bills: list[Bill],
+        units_bills: list[Bill],
         month_reference: ReferenceMonth,
     ):
         self.rental_contract = rental_contract

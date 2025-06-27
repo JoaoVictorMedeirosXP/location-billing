@@ -1,10 +1,10 @@
 import pandas as pd
-from gspread_dataframe import set_with_dataframe
-from config.settings import (
-    SPREADSHEET_URL,
-    NUM_ROWS_TO_JUMP,
-)
 from adapters.sheets.connection import SheetsClientSingleton
+from config.settings import (
+    NUM_ROWS_TO_JUMP,
+    SPREADSHEET_URL,
+)
+from gspread_dataframe import set_with_dataframe
 from repositories.contracts_summary_repository import ContractSummaryRepository
 from utils.reference_month import ReferenceMonth
 
@@ -29,4 +29,3 @@ class SheetsContractSummaryRepository(ContractSummaryRepository):
 
         set_with_dataframe(self.sheet, df, row=row + 1, include_column_header=True)
 
-        return

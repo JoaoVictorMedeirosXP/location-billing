@@ -1,5 +1,5 @@
-from utils.social_document import SocialNumber
 from repositories.contracts_repository import ContractRepository
+from utils.social_document import SocialNumber
 
 
 class ContractMonitoringService:

@@ -1,5 +1,5 @@
-from flask import request, jsonify
 from factories.use_case_factory import make_summary_by_message_use_case
+from flask import jsonify, request
 
 
 def process_summary_by_message_handler():

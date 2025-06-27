@@ -1,4 +1,5 @@
 import re
+
 from utils.cnpj import CNPJ
 from utils.cpf import CPF
 

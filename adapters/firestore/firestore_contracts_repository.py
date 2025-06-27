@@ -1,19 +1,16 @@
 from datetime import datetime
 
 from adapters.firestore.connection import FirestoreClientSingleton
-
 from models.rental_contract import RentalContract
 from repositories.contracts_repository import ContractRepository
 from utils.social_document import SocialNumber
-
-from typing import List, Dict
 
 
 class FirestoreContractsRepository(ContractRepository):
     def __init__(self):
         self.client = FirestoreClientSingleton.get_client()
 
-    def get_contracts_by_cnpjs(self, cnpjs: List):
+    def get_contracts_by_cnpjs(self, cnpjs: list):
         contracts_data = []
         chunk_size = 10
 
@@ -28,8 +25,8 @@ class FirestoreContractsRepository(ContractRepository):
         return contracts_data
 
     def get_contracts_by_cnpj_and_date(
-        self, cnpj_list: List, target_date
-    ) -> List[RentalContract]:
+        self, cnpj_list: list, target_date
+    ) -> list[RentalContract]:
 
         target_date_dt = datetime.strptime(target_date, "%Y-%m-%d").date()
         latest_by_cnpj = {}
@@ -56,7 +53,7 @@ class FirestoreContractsRepository(ContractRepository):
             ]
         )
 
-    def make_rental_contract(self, contract: Dict) -> RentalContract:
+    def make_rental_contract(self, contract: dict) -> RentalContract:
 
         return RentalContract(
             calculation_method=contract["calculationMethod"],

@@ -1,5 +1,5 @@
-from config.settings import SPREADSHEET_URL
 from adapters.sheets.connection import SheetsClientSingleton
+from config.settings import SPREADSHEET_URL
 from repositories.contracts_repository import ContractRepository
 
 

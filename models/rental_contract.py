@@ -1,6 +1,6 @@
-from utils.cnpj import CNPJ
 from datetime import date
-from typing import List
+
+from utils.cnpj import CNPJ
 
 
 class RentalContract:
@@ -11,8 +11,8 @@ class RentalContract:
         contractDate: date,
         name: str,
         rent_value: float,
-        rental_units: List[dict],
-        units: List[dict],
+        rental_units: list[dict],
+        units: list[dict],
         cnpj: CNPJ,
     ):
 
@@ -25,7 +25,7 @@ class RentalContract:
         self.cnpj = cnpj
 
     @property
-    def all_contract_codes(self) -> List[str]:
+    def all_contract_codes(self) -> list[str]:
         unit_codes = [i["contractAccount"] for i in self.units]
         rental_units_codes = [i["contractAccount"] for i in self.rental_units]
 

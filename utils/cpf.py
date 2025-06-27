@@ -12,7 +12,7 @@ class CPF(Document):
             return False
 
         def calculate_check_digit(partial, weights):
-            total = sum(int(d) * w for d, w in zip(partial, weights))
+            total = sum(int(d) * w for d, w in zip(partial, weights, strict=False))
             remainder = total % 11
             return "0" if remainder < 2 else str(11 - remainder)
 

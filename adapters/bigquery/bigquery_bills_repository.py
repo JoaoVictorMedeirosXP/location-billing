@@ -1,9 +1,7 @@
-from adapters.bigquery.connection import BigQueryClientSingleton
 
+from adapters.bigquery.connection import BigQueryClientSingleton
 from models.bill import Bill
 from repositories.bills_repository import BillRepository
-
-from typing import List
 
 
 class BigQueryBillsRepository(BillRepository):
@@ -13,7 +11,7 @@ class BigQueryBillsRepository(BillRepository):
     def run_query(self, query: str):
         return self.client.query(query).to_dataframe()
 
-    def get_bills_dataframe(self, all_account_contracts: List[str], reference_month):
+    def get_bills_dataframe(self, all_account_contracts: list[str], reference_month):
         query = f"""
             SELECT *
             FROM `xperesidencial.big_data.bills_big_data` 
@@ -23,7 +21,7 @@ class BigQueryBillsRepository(BillRepository):
         return self.run_query(query)
 
     def get_bills(
-        self, all_account_contracts: List[str], reference_month
-    ) -> List[Bill]:
+        self, all_account_contracts: list[str], reference_month
+    ) -> list[Bill]:
         bills_data = self.get_bills_dataframe(all_account_contracts, reference_month)
         return [Bill(**row.to_dict()) for _, row in bills_data.iterrows()]

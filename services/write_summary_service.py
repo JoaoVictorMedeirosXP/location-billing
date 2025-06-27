@@ -1,6 +1,5 @@
-import pandas as pd
-from typing import List, Dict
 
+import pandas as pd
 from repositories.contracts_summary_repository import ContractSummaryRepository
 from utils.reference_month import ReferenceMonth
 
@@ -10,7 +9,7 @@ class SheetsWriterService:
     def __init__(self, contract_summary_repo: ContractSummaryRepository):
         self.contract_summary_repo = contract_summary_repo
 
-    def append_table_with_header(self, data: List[Dict]):
+    def append_table_with_header(self, data: list[dict]):
         if not data:
             print("Empty list")
             return

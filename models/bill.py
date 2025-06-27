@@ -1,92 +1,91 @@
 from dataclasses import dataclass
-from typing import Optional
 from datetime import date, datetime
 
 
 @dataclass
 class Bill:
-    classificacao_tarifaria: Optional[str]
-    concessionaria: Optional[str]
-    consumo_reativo_excedente: Optional[float]
-    consumo_reativo_excedente_fora_ponta: Optional[float]
-    consumo_reativo_excedente_ponta: Optional[float]
-    consumo_te: Optional[float]
-    consumo_te_fora_ponta: Optional[float]
-    consumo_te_ponta: Optional[float]
-    consumo_tusd: Optional[float]
-    consumo_tusd_fora_ponta: Optional[float]
-    consumo_tusd_ponta: Optional[float]
-    cpf_cnpj: Optional[str]
-    demanda: Optional[float]
-    demanda_contratada_fora_ponta: Optional[float]
-    demanda_contratada_ponta: Optional[float]
-    demanda_fora_ponta: Optional[float]
-    demanda_ponta: Optional[float]
-    demanda_reativa_excedente: Optional[float]
-    demanda_reativa_excedente_fora_ponta: Optional[float]
-    demanda_reativa_excedente_ponta: Optional[float]
-    demanda_ultrapassagem: Optional[float]
-    demanda_ultrapassagem_fora_ponta: Optional[float]
-    demanda_ultrapassagem_ponta: Optional[float]
-    dias_faturamento: Optional[float]
-    endereco: Optional[str]
-    energia_compensada: Optional[float]
-    energia_injetada: Optional[float]
-    ilum_pub: Optional[float]
-    medida_consumo_ativo_foraPonta: Optional[float]
-    medida_consumo_ativo_ponta: Optional[float]
-    medida_consumo_reativo_exc_foraPonta: Optional[float]
-    medida_consumo_reativo_exc_ponta: Optional[float]
-    medida_demanda_ativa_foraPonta: Optional[float]
-    medida_demanda_ativa_ponta: Optional[float]
-    medida_demanda_max_corrigida_foraPonta: Optional[float]
-    medida_demanda_max_corrigida_ponta: Optional[float]
-    mes_referencia: Optional[str]
-    nome: Optional[str]
-    perdas_transformacao: Optional[float]
-    tarifa_consumo_reativo_excedente: Optional[float]
-    tarifa_consumo_reativo_excedente_fora_ponta: Optional[float]
-    tarifa_consumo_reativo_excedente_ponta: Optional[float]
-    tarifa_consumo_te: Optional[float]
-    tarifa_consumo_te_fora_ponta: Optional[float]
-    tarifa_consumo_te_ponta: Optional[float]
-    tarifa_consumo_tusd: Optional[float]
-    tarifa_consumo_tusd_fora_ponta: Optional[float]
-    tarifa_consumo_tusd_ponta: Optional[float]
-    tarifa_demanda: Optional[float]
-    tarifa_demanda_fora_ponta: Optional[float]
-    tarifa_demanda_ponta: Optional[float]
-    tarifa_demanda_reativa_excedente: Optional[float]
-    tarifa_demanda_reativa_excedente_fora_ponta: Optional[float]
-    tarifa_demanda_reativa_excedente_ponta: Optional[float]
-    tarifa_demanda_ultrapassagem: Optional[float]
-    tarifa_demanda_ultrapassagem_fora_ponta: Optional[float]
-    tarifa_demanda_ultrapassagem_ponta: Optional[float]
-    valor_total: Optional[float]
-    valor_total_consumo_reativo_excedente: Optional[float]
-    valor_total_consumo_reativo_excedente_fora_ponta: Optional[float]
-    valor_total_consumo_reativo_excedente_ponta: Optional[float]
-    valor_total_consumo_te: Optional[float]
-    valor_total_consumo_te_fora_ponta: Optional[float]
-    valor_total_consumo_te_ponta: Optional[float]
-    valor_total_consumo_tusd: Optional[float]
-    valor_total_consumo_tusd_fora_ponta: Optional[float]
-    valor_total_consumo_tusd_ponta: Optional[float]
-    valor_total_demanda: Optional[float]
-    valor_total_demanda_fora_ponta: Optional[float]
-    valor_total_demanda_ponta: Optional[float]
-    valor_total_demanda_reativa_excedente: Optional[float]
-    valor_total_demanda_reativa_excedente_fora_ponta: Optional[float]
-    valor_total_demanda_reativa_excedente_ponta: Optional[float]
-    valor_total_demanda_ultrapassagem: Optional[float]
-    valor_total_demanda_ultrapassagem_fora_ponta: Optional[float]
-    valor_total_demanda_ultrapassagem_ponta: Optional[float]
-    conta_contrato: Optional[str]
-    data_fim: Optional[date]
-    data_ini: Optional[date]
-    update_timestamp: Optional[datetime]
-    medida_consumo_reativo_foraPonta: Optional[float]
-    medida_consumo_reativo_ponta: Optional[float]
-    acrescimo_band_vermelha: Optional[float]
-    acrescimo_band_amarela: Optional[float]
-    acrescimo_band_vermelha_2: Optional[float]
+    classificacao_tarifaria: str | None
+    concessionaria: str | None
+    consumo_reativo_excedente: float | None
+    consumo_reativo_excedente_fora_ponta: float | None
+    consumo_reativo_excedente_ponta: float | None
+    consumo_te: float | None
+    consumo_te_fora_ponta: float | None
+    consumo_te_ponta: float | None
+    consumo_tusd: float | None
+    consumo_tusd_fora_ponta: float | None
+    consumo_tusd_ponta: float | None
+    cpf_cnpj: str | None
+    demanda: float | None
+    demanda_contratada_fora_ponta: float | None
+    demanda_contratada_ponta: float | None
+    demanda_fora_ponta: float | None
+    demanda_ponta: float | None
+    demanda_reativa_excedente: float | None
+    demanda_reativa_excedente_fora_ponta: float | None
+    demanda_reativa_excedente_ponta: float | None
+    demanda_ultrapassagem: float | None
+    demanda_ultrapassagem_fora_ponta: float | None
+    demanda_ultrapassagem_ponta: float | None
+    dias_faturamento: float | None
+    endereco: str | None
+    energia_compensada: float | None
+    energia_injetada: float | None
+    ilum_pub: float | None
+    medida_consumo_ativo_foraPonta: float | None
+    medida_consumo_ativo_ponta: float | None
+    medida_consumo_reativo_exc_foraPonta: float | None
+    medida_consumo_reativo_exc_ponta: float | None
+    medida_demanda_ativa_foraPonta: float | None
+    medida_demanda_ativa_ponta: float | None
+    medida_demanda_max_corrigida_foraPonta: float | None
+    medida_demanda_max_corrigida_ponta: float | None
+    mes_referencia: str | None
+    nome: str | None
+    perdas_transformacao: float | None
+    tarifa_consumo_reativo_excedente: float | None
+    tarifa_consumo_reativo_excedente_fora_ponta: float | None
+    tarifa_consumo_reativo_excedente_ponta: float | None
+    tarifa_consumo_te: float | None
+    tarifa_consumo_te_fora_ponta: float | None
+    tarifa_consumo_te_ponta: float | None
+    tarifa_consumo_tusd: float | None
+    tarifa_consumo_tusd_fora_ponta: float | None
+    tarifa_consumo_tusd_ponta: float | None
+    tarifa_demanda: float | None
+    tarifa_demanda_fora_ponta: float | None
+    tarifa_demanda_ponta: float | None
+    tarifa_demanda_reativa_excedente: float | None
+    tarifa_demanda_reativa_excedente_fora_ponta: float | None
+    tarifa_demanda_reativa_excedente_ponta: float | None
+    tarifa_demanda_ultrapassagem: float | None
+    tarifa_demanda_ultrapassagem_fora_ponta: float | None
+    tarifa_demanda_ultrapassagem_ponta: float | None
+    valor_total: float | None
+    valor_total_consumo_reativo_excedente: float | None
+    valor_total_consumo_reativo_excedente_fora_ponta: float | None
+    valor_total_consumo_reativo_excedente_ponta: float | None
+    valor_total_consumo_te: float | None
+    valor_total_consumo_te_fora_ponta: float | None
+    valor_total_consumo_te_ponta: float | None
+    valor_total_consumo_tusd: float | None
+    valor_total_consumo_tusd_fora_ponta: float | None
+    valor_total_consumo_tusd_ponta: float | None
+    valor_total_demanda: float | None
+    valor_total_demanda_fora_ponta: float | None
+    valor_total_demanda_ponta: float | None
+    valor_total_demanda_reativa_excedente: float | None
+    valor_total_demanda_reativa_excedente_fora_ponta: float | None
+    valor_total_demanda_reativa_excedente_ponta: float | None
+    valor_total_demanda_ultrapassagem: float | None
+    valor_total_demanda_ultrapassagem_fora_ponta: float | None
+    valor_total_demanda_ultrapassagem_ponta: float | None
+    conta_contrato: str | None
+    data_fim: date | None
+    data_ini: date | None
+    update_timestamp: datetime | None
+    medida_consumo_reativo_foraPonta: float | None
+    medida_consumo_reativo_ponta: float | None
+    acrescimo_band_vermelha: float | None
+    acrescimo_band_amarela: float | None
+    acrescimo_band_vermelha_2: float | None

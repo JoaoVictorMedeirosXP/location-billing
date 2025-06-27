@@ -1,5 +1,5 @@
-from flask import request, jsonify
 from factories.use_case_factory import make_legacy_process_contracts_use_case
+from flask import jsonify, request
 
 
 def process_contract_from_sheets_handler():

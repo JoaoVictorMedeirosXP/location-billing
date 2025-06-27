@@ -1,8 +1,8 @@
 import gspread
-from google.oauth2 import service_account
 from config.settings import (
     SERVICE_ACCOUNT_FILE,
 )
+from google.oauth2 import service_account
 
 
 class SheetsClientSingleton:
