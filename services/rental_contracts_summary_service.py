@@ -1,4 +1,3 @@
-
 from models.rental_contract import RentalContract
 from models.rental_summary_contract import RentalSummaryContract
 from repositories.bills_repository import BillRepository

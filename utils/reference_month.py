@@ -32,7 +32,7 @@ class ReferenceMonth:
         return cls(date.today())
 
     def _parse_to_date(self, value):
-        if isinstance(value, (datetime, date)):
+        if isinstance(value, datetime | date):
             return value
         elif isinstance(value, str):
             for fmt in self.SUPPORTED_FORMATS:

@@ -1,4 +1,3 @@
-
 from adapters.bigquery.connection import BigQueryClientSingleton
 from models.bill import Bill
 from repositories.bills_repository import BillRepository

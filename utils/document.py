@@ -1,14 +1,16 @@
 import re
 from abc import ABC, abstractmethod
 
+REMAINDER_CONST = 2
+
 
 class Document(ABC):
     def __init__(self, value, validate=True):
         raw = self._clean(str(value)).zfill(self.length)
         self.raw = raw
 
-        if validate and not self._is_valid():
-            raise ValueError(f"Invalid {self.__class__.__name__}: {value}")
+        # if validate and not self._is_valid():
+        #     raise ValueError(f"Invalid {self.__class__.__name__}: {value}")
 
     def _clean(self, value: str) -> str:
         return re.sub(r"\D", "", value)

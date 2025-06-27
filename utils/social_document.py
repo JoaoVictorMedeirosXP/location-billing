@@ -1,16 +1,16 @@
 import re
 
-from utils.cnpj import CNPJ
-from utils.cpf import CPF
+from utils.cnpj import CNPJ, CNPJ_LENGTH
+from utils.cpf import CPF, CPF_LENGTH
 
 
 class SocialNumber:
     def __init__(self, value, validate=True):
         cleaned = self._clean(str(value))
 
-        if len(cleaned) <= 11:
+        if len(cleaned) <= CPF_LENGTH:
             self.document = CPF(cleaned.zfill(11), validate=validate)
-        elif len(cleaned) <= 14:
+        elif len(cleaned) <= CNPJ_LENGTH:
             self.document = CNPJ(cleaned.zfill(14), validate=validate)
         else:
             raise ValueError(

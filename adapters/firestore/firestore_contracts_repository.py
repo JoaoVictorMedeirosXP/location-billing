@@ -59,17 +59,16 @@ class FirestoreContractsRepository(ContractRepository):
             calculation_method=contract["calculationMethod"],
             name=contract["name"],
             contractDate=contract["contractDate"],
-            rent_value=self.set_rent_value(contract["rentValue"]),
+            rent_value=self.set_rent_value(float(contract["rentValue"])),
             cnpj=SocialNumber(contract["cnpj"]),
             units=contract["units"],
             rental_units=contract["rentalUnits"],
         )
 
-    def set_rent_value(self, rent_value):
-        try:
-            return float(rent_value)
-        except:
+    def set_rent_value(self, rent_value: float) -> float:
+        if not isinstance(rent_value, float):
             return 0
+        return rent_value
 
     def get_all_contracts_cnpjs(self):
         return super().get_all_contracts_cnpjs()

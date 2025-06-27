@@ -1,4 +1,3 @@
-
 from models.bill import Bill
 from models.rental_contract import RentalContract
 from utils.reference_month import ReferenceMonth

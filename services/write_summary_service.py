@@ -1,4 +1,3 @@
-
 import pandas as pd
 from repositories.contracts_summary_repository import ContractSummaryRepository
 from utils.reference_month import ReferenceMonth

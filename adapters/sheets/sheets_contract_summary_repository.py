@@ -28,4 +28,3 @@ class SheetsContractSummaryRepository(ContractSummaryRepository):
         )
 
         set_with_dataframe(self.sheet, df, row=row + 1, include_column_header=True)
-
