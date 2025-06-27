@@ -7,7 +7,9 @@ def create_app():
     app = Flask(__name__)
 
     app.register_blueprint(contract_sheet_blueprint, url_prefix="/contract-sheet")
-    app.register_blueprint(summary_by_message_blueprint, url_prefix="/summary-by-message")
+    app.register_blueprint(
+        summary_by_message_blueprint, url_prefix="/summary-by-message"
+    )
 
     return app
 

@@ -52,7 +52,7 @@ class RentalSummaryContract:
     @property
     def percent_injected(self):
         return self.injected_kwh / self.predicted_generation
-    
+
     def to_dict(self):
         return {
             "month_reference": self.month_reference.as_string,
@@ -64,8 +64,17 @@ class RentalSummaryContract:
             "full_rent": self.full_rent,
             "proportional_rent": self.proportional_rent,
             "rent": self.rent,
-            "rental_contract": self.rental_contract.to_dict() if hasattr(self.rental_contract, "to_dict") else str(self.rental_contract),
-            "rental_units_bills": [bill.to_dict() if hasattr(bill, "to_dict") else str(bill) for bill in self.rental_units_bills],
-            "units_bills": [bill.to_dict() if hasattr(bill, "to_dict") else str(bill) for bill in self.units_bills],
+            "rental_contract": (
+                self.rental_contract.to_dict()
+                if hasattr(self.rental_contract, "to_dict")
+                else str(self.rental_contract)
+            ),
+            "rental_units_bills": [
+                bill.to_dict() if hasattr(bill, "to_dict") else str(bill)
+                for bill in self.rental_units_bills
+            ],
+            "units_bills": [
+                bill.to_dict() if hasattr(bill, "to_dict") else str(bill)
+                for bill in self.units_bills
+            ],
         }
-

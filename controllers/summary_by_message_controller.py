@@ -3,9 +3,9 @@ from factories.use_case_factory import make_summary_by_message_use_case
 
 
 def process_summary_by_message_handler():
-   
+
     body = request.get_json()
-    print("BODY:",body)
+    print("BODY:", body)
     message = body.get("message", "")
 
     use_case = make_summary_by_message_use_case()
