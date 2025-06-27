@@ -1,9 +1,8 @@
-from utils.cnpj import CNPJ
 from models.bill import Bill
-
-from datetime import date
-from typing import List
 from models.rental_contract import RentalContract
+from utils.reference_month import ReferenceMonth
+
+from typing import List
 
 
 class RentalSummaryContract:
@@ -13,7 +12,7 @@ class RentalSummaryContract:
         rental_contract: RentalContract,
         rental_units_bills: List[Bill],
         units_bills: List[Bill],
-        month_reference: str,
+        month_reference: ReferenceMonth,
     ):
         self.rental_contract = rental_contract
         self.rental_units_bills = rental_units_bills
@@ -56,7 +55,7 @@ class RentalSummaryContract:
     
     def to_dict(self):
         return {
-            "month_reference": self.month_reference,
+            "month_reference": self.month_reference.as_string,
             "predicted_generation": self.predicted_generation,
             "injected_kwh": self.injected_kwh,
             "compensated_kwh": self.compensated_kwh,

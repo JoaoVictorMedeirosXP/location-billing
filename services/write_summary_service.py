@@ -1,6 +1,8 @@
 import pandas as pd
 from typing import List, Dict
+
 from repositories.contracts_summary_repository import ContractSummaryRepository
+from utils.reference_month import ReferenceMonth
 
 
 class SheetsWriterService:
@@ -15,7 +17,7 @@ class SheetsWriterService:
 
         df = pd.DataFrame(data)
 
-        month_reference = data[0]["month_reference"]
+        month_reference = ReferenceMonth(data[0]["month_reference"])
 
         df = df.drop(columns=["month_reference"])
 

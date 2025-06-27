@@ -1,8 +1,7 @@
-from config.settings import (
-    SPREADSHEET_URL
-)
+from config.settings import SPREADSHEET_URL
 from adapters.sheets.connection import SheetsClientSingleton
 from repositories.contracts_repository import ContractRepository
+
 
 class SheetsContractsRepository(ContractRepository):
 
@@ -16,7 +15,7 @@ class SheetsContractsRepository(ContractRepository):
         non_null_values = [value for value in column_values if value.strip() != ""]
 
         return non_null_values
-    
+
     def get_all_contracts_cnpjs(self):
         return self.get_column("E")
 
