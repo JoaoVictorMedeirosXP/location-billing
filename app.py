@@ -1,6 +1,7 @@
 from flask import Flask
-from routes.contract_sheets_routes import contract_sheet_blueprint
-from routes.summary_by_message_routes import summary_by_message_blueprint
+
+from src.routes.contract_sheets_routes import contract_sheet_blueprint
+from src.routes.summary_by_message_routes import summary_by_message_blueprint
 
 
 def create_app():
