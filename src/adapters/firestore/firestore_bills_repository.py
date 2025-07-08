@@ -9,7 +9,9 @@ class FirestoreBillsRepository(BillRepository):
     def __init__(self):
         self.client = FirestoreClientSingleton.get_client()
 
-    def get_bills_by_contracts_and_month(self, all_account_contracts, reference_month: ReferenceMonth):
+    def get_bills_by_contracts_and_month(
+        self, all_account_contracts, reference_month: ReferenceMonth
+    ):
         bills = []
         chunk_size = 10
 
@@ -18,14 +20,15 @@ class FirestoreBillsRepository(BillRepository):
             query = (
                 self.client.collection("faturas_processadas")
                 .where("dados.unidade_consumidora.contrato", "in", chunk)
-                .where("dados.fatura.mes_referencia", "==", reference_month.as_firestore_string)
+                .where(
+                    "dados.fatura.mes_referencia",
+                    "==",
+                    reference_month.as_firestore_string,
+                )
             )
-            
-            print(reference_month.as_firestore_string)
 
             docs = query.stream()
             for doc in docs:
-                print(doc)
                 bills.append(self.make_bill(doc.to_dict()))
 
         return bills
@@ -35,5 +38,23 @@ class FirestoreBillsRepository(BillRepository):
 
         return Bill(
             concessionaria=dados["distribuidora"],
-            mes_referencia=dados["fatura"]["mes_referencia"],            
+            conta_contrato=dados["unidade_consumidora"]["contrato"],
+            mes_referencia=dados["fatura"]["mes_referencia"],
+            energia_injetada=self.set_topic_value(
+                dados["fatura"]["devolucao_geracao"]["saldos_geracao"], "saldo_injetado"
+            ),
+            energia_compensada=(
+                self.set_topic_value(
+                    dados["fatura"]["devolucao_geracao"]["saldos_geracao"],
+                    "saldo_ajuste_CAT",
+                )
+                * -1
+            ),
         )
+
+    def set_topic_value(self, arr: list, topic: str) -> float:
+        value = 0
+        for i in arr:
+            if i["nome"] == topic:
+                value = i["saldo"]
+        return value

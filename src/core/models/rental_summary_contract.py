@@ -19,6 +19,8 @@ class RentalSummaryContract:
 
     @property
     def predicted_generation(self) -> float:
+        if self.rental_contract.lot_size != 0:
+            return float(self.rental_contract.lot_size)
         return sum(unit["capacity"] for unit in self.rental_contract.rental_units)
 
     @property
@@ -35,7 +37,10 @@ class RentalSummaryContract:
 
     @property
     def full_rent(self) -> float:
-        return self.rental_contract.rent_value
+        if isinstance(self.rental_contract.rent_value, (int, float)):
+            return float(self.rental_contract.rent_value)
+        value = str(self.rental_contract.rent_value).replace(",", ".")
+        return float(value)
 
     @property
     def proportional_rent(self) -> float:
@@ -53,20 +58,6 @@ class RentalSummaryContract:
 
     @property
     def emitted_bills(self) -> str:
-        print("Contrato:", self.rental_contract.name)
-        print(
-            "Unidades:",
-            [bill.conta_contrato for bill in self.units_bills],
-            "Esperado:",
-            [i["contractAccount"] for i in self.rental_contract.units],
-        )
-        print(
-            "Lotes:",
-            [bill.conta_contrato for bill in self.rental_units_bills],
-            "Esperado:",
-            [i["contractAccount"] for i in self.rental_contract.rental_units],
-        )
-        print("==============")
         return f"{len(self.units_bills + self.rental_units_bills)} / {len(self.rental_contract.units) + len(self.rental_contract.rental_units)}"
 
     def to_dict(self):

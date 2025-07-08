@@ -19,6 +19,20 @@ class SheetsWriterService:
 
         df = df.drop(columns=["month_reference"])
 
-        self.contract_summary_repo.write_contracts_summary(df, month_reference)
+        self.contract_summary_repo.append_write_contracts_summary(df, month_reference)
 
         return
+    
+    def overwrite_table_with_header(self, data: list[dict]):
+        
+        if not data:
+            print("Empty list")
+            return
+
+        df = pd.DataFrame(data)
+        df = df.drop(columns=["month_reference"])
+
+        self.contract_summary_repo.overwrite_contracts_summary(df)
+
+        return
+        

@@ -18,7 +18,7 @@ class SheetsContractSummaryRepository(ContractSummaryRepository):
     def get_next_rows(self) -> int:
         return len(self.sheet.get_all_values()) + NUM_ROWS_TO_JUMP
 
-    def write_contracts_summary(
+    def append_write_contracts_summary(
         self, df: pd.DataFrame, month_reference: ReferenceMonth
     ):
         row = self.get_next_rows()
@@ -28,3 +28,7 @@ class SheetsContractSummaryRepository(ContractSummaryRepository):
         )
 
         set_with_dataframe(self.sheet, df, row=row + 1, include_column_header=True)
+
+    def overwrite_contracts_summary(self, df: pd.DataFrame):
+        self.sheet.clear()
+        set_with_dataframe(self.sheet, df, include_column_header=True)
