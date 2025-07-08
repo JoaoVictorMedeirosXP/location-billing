@@ -1,6 +1,5 @@
 import pandas as pd
 from src.core.repositories.contracts_summary_repository import ContractSummaryRepository
-
 from src.utils.reference_month import ReferenceMonth
 
 

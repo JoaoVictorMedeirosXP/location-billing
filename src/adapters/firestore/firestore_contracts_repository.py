@@ -3,7 +3,6 @@ from datetime import datetime
 from src.adapters.firestore.connection import FirestoreClientSingleton
 from src.core.models.rental_contract import RentalContract
 from src.core.repositories.contracts_repository import ContractRepository
-
 from src.utils.social_document import SocialNumber
 
 

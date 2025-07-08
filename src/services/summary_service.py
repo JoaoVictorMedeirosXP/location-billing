@@ -18,4 +18,5 @@ class SummaryService:
             "valor aluguel": self.rental_summary_contract.rent,
             "porcentagem injetada": self.rental_summary_contract.percent_injected,
             "month_reference": self.rental_summary_contract.month_reference,
+            "Contas Emitidas": self.rental_summary_contract.emitted_bills
         }

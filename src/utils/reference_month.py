@@ -52,6 +52,10 @@ class ReferenceMonth:
     @property
     def as_string(self) -> str:
         return self._date.strftime("%m/%Y")
+    
+    @property
+    def as_firestore_string(self) -> str:
+        return f"{self._date.year}-{self._date.month:02d}-01T03:00:00+00:00"
 
     @property
     def as_date(self) -> date:

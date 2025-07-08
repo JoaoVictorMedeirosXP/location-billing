@@ -30,7 +30,7 @@ class RentalSummaryContractsService:
 
         reference_month = ReferenceMonth(target_date)
 
-        bills = self.bills_repo.get_bills(
+        bills = self.bills_repo.get_bills_by_contracts_and_month(
             rental_contract.all_contract_codes,
             reference_month=reference_month.as_string,
         )

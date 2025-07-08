@@ -51,6 +51,24 @@ class RentalSummaryContract:
     def percent_injected(self):
         return self.injected_kwh / self.predicted_generation
 
+    @property
+    def emitted_bills(self) -> str:
+        print("Contrato:", self.rental_contract.name)
+        print(
+            "Unidades:",
+            [bill.conta_contrato for bill in self.units_bills],
+            "Esperado:",
+            [i["contractAccount"] for i in self.rental_contract.units],
+        )
+        print(
+            "Lotes:",
+            [bill.conta_contrato for bill in self.rental_units_bills],
+            "Esperado:",
+            [i["contractAccount"] for i in self.rental_contract.rental_units],
+        )
+        print("==============")
+        return f"{len(self.units_bills + self.rental_units_bills)} / {len(self.rental_contract.units) + len(self.rental_contract.rental_units)}"
+
     def to_dict(self):
         return {
             "month_reference": self.month_reference.as_string,

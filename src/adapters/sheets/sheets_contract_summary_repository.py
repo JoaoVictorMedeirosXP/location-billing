@@ -6,7 +6,6 @@ from config.settings import (
 from gspread_dataframe import set_with_dataframe
 from src.adapters.sheets.connection import SheetsClientSingleton
 from src.core.repositories.contracts_summary_repository import ContractSummaryRepository
-
 from src.utils.reference_month import ReferenceMonth
 
 

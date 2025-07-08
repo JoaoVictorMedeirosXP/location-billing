@@ -19,7 +19,7 @@ class BigQueryBillsRepository(BillRepository):
         """
         return self.run_query(query)
 
-    def get_bills(
+    def get_bills_by_contracts_and_month(
         self, all_account_contracts: list[str], reference_month
     ) -> list[Bill]:
         bills_data = self.get_bills_dataframe(all_account_contracts, reference_month)
