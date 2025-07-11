@@ -15,3 +15,7 @@ class ContractRepository(ABC):
     @abstractmethod
     def get_all_contracts_cnpjs(self):
         pass
+    
+    @abstractmethod
+    def get_contract_by_id(self, id: int) -> RentalContract:
+        pass

@@ -12,12 +12,34 @@ class SheetsUnitsRepository(UnitsRepository):
     def _get_column(self, column_letter: str):
         col_index = ord(column_letter.upper()) - ord("A") + 1
         column_values = self.sheet.col_values(col_index)
-        non_null_values = [value.strip() for value in column_values if value.strip() != ""]
+        non_null_values = [
+            value.strip() for value in column_values if value.strip() != ""
+        ]
         return non_null_values
 
     def check_unit_by_account_contract(self, account_contract: str) -> bool:
         account_contracts = self._get_column("C")
         return account_contract in account_contracts
+
+    def get_unit_by_account_contract(self, account_contract: str) -> dict | None:
+        account_contracts = self._get_column("C")
+
+        try:
+            row_index = account_contracts.index(account_contract) + 1
+        except ValueError:
+            return {}
+
+        header = [col.strip() for col in self.sheet.row_values(1)]
+        header = [h for h in header if h]
+
+        row_values = self.sheet.row_values(row_index)
+
+        row_dict = {
+            header[i]: (row_values[i].strip() if i < len(row_values) else "")
+            for i in range(len(header))
+        }
+
+        return row_dict
 
     def get_units_by_contract_id(self, contract_id: str) -> list[dict]:
 
@@ -41,7 +63,10 @@ class SheetsUnitsRepository(UnitsRepository):
             if len(row) <= contract_id_index:
                 continue
             if row[contract_id_index].strip() == contract_id:
-                row_dict = {header[i]: (row[i].strip() if i < len(row) else "") for i in range(len(header))}
+                row_dict = {
+                    header[i]: (row[i].strip() if i < len(row) else "")
+                    for i in range(len(header))
+                }
                 result.append(row_dict)
 
         return result

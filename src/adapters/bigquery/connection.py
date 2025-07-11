@@ -1,8 +1,10 @@
 import os
-from google.cloud import bigquery
-from google.oauth2 import service_account
+
 import google.auth
 from config.settings import SERVICE_ACCOUNT_FILE
+from google.cloud import bigquery
+from google.oauth2 import service_account
+
 
 class BigQueryClientSingleton:
     _client = None

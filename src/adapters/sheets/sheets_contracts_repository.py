@@ -21,7 +21,6 @@ class SheetsContractsRepository(ContractRepository):
         return super().get_contracts_by_cnpj_and_date(cnpj_list, target_date)
 
     def get_all_contracts(self) -> list[dict]:
-
         all_values = self.sheet.get_all_values()
 
         if not all_values or len(all_values) < 2:
@@ -44,3 +43,27 @@ class SheetsContractsRepository(ContractRepository):
             contracts.append(row_dict)
 
         return contracts
+
+    def get_contract_by_id(self, id: int) -> dict | None:
+        ids_column = self.get_column("A")
+
+        ids_without_header = ids_column[1:]  
+
+        try:
+            row_idx_without_header = ids_without_header.index(str(id))
+        except ValueError:
+            return None
+
+        row_index = row_idx_without_header + 2
+
+        header = [col.strip() for col in self.sheet.row_values(1)]
+        header = [h for h in header if h]
+
+        row_values = self.sheet.row_values(row_index)
+
+        row_dict = {
+            header[i]: (row_values[i].strip() if i < len(row_values) else "")
+            for i in range(len(header))
+        }
+
+        return row_dict

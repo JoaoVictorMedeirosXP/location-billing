@@ -56,8 +56,8 @@ class RentalRelationalContractService:
         self, rental_contract: RentalContract
     ) -> RentalSummaryContract:
 
-        # month_reference = ReferenceMonth(value="03/2025")
-        month_reference = ReferenceMonth.current()
+        month_reference = ReferenceMonth(value="06/2025")
+        # month_reference = ReferenceMonth.current()
 
         bills = self.bills_repo.get_bills_by_contracts_and_month(
             all_account_contracts=rental_contract.all_contract_codes,

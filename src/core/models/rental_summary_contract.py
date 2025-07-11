@@ -37,7 +37,7 @@ class RentalSummaryContract:
 
     @property
     def full_rent(self) -> float:
-        if isinstance(self.rental_contract.rent_value, (int, float)):
+        if isinstance(self.rental_contract.rent_value, int | float):
             return float(self.rental_contract.rent_value)
         value = str(self.rental_contract.rent_value).replace(",", ".")
         return float(value)

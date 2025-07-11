@@ -67,3 +67,8 @@ class ReferenceMonth:
         year = self._date.year
         month_name_pt = self.MONTHS_PT[month_index]
         return f"{month_name_pt} de {year}"
+    
+    @property
+    def as_month_pt(self) -> str:
+        month_index = self._date.month - 1
+        return self.MONTHS_PT[month_index].title()
